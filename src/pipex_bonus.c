@@ -6,13 +6,13 @@
 /*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:40:21 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/12 18:43:29 by mvigara-         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:52:18 by mvigara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	child_process(char *argv, char **envp, int *pipe_fd)
+void	child_process(char *argv, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -125,7 +125,7 @@ int	main(int argc, char **argv, char **envp)
 	if (pid1 == -1)
 		handle_error();
 	if (pid1 == 0)
-		child_process(argv, envp, pipe_fd);
+		child_process(argv, envp);
 	pid2 = fork();
 	if (pid2 == -1)
 		handle_error();

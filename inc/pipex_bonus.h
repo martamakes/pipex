@@ -6,7 +6,7 @@
 /*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:37:46 by mvigara-          #+#    #+#             */
-/*   Updated: 2024/09/12 18:41:40 by mvigara-         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:52:28 by mvigara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-void	child_process(char *argv, char **envp);
+void	child_process(char **argv, char **envp);
 void	here_doc_child(int *fd, char *limiter);
 void	here_doc(char *limiter, int argc);
 void	handle_files(int argc, char **argv);
