@@ -14,5 +14,6 @@ void	execute_pipex(char *argv, char **envp);
 void	handle_error(void);
 void	free_matrix(char **matrix);
 char	*find_path(char *cmd, char **envp);
+void	check_empty_args(int argc, char **argv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:40:21 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/12 10:25:11 by marta            ###   ########.fr       */
+/*   Updated: 2024/09/12 11:03:14 by marta            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,23 +105,33 @@ void	handle_files(int argc, char **argv)
 	dup2(outfile, STDOUT_FILENO);
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	int	i;
+    int     pipe_fd[2];
+    pid_t   pid1, pid2;
+    int     status;
 
-	if (argc < 5)
-	{
-		ft_putstr_fd("Error: Bad arguments\n", 2);
-		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 ... cmdn file2\n", 1);
-		ft_putstr_fd("   or: ./pipex here_doc LIMITER cmd cmd1 file\n", 1);
-		exit(1);
-	}
-	handle_files(argc, argv);
-	i = 2;
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
-		i = 3;
-	while (i < argc - 2)
-		child_process(argv[i++], envp);
-	execute_pipex(argv[argc - 2], envp);
-	return (0);
+    if (argc != 5)
+    {
+        ft_putstr_fd("Error: Invalid usage. Use: ./pipex file1 cmd1 cmd2 file2\n", 2);
+        exit(1);
+    }
+    check_empty_args(argc, argv);
+    if (pipe(pipe_fd) == -1)
+        handle_error();
+    pid1 = fork();
+    if (pid1 == -1)
+        handle_error();
+    if (pid1 == 0)
+        child_process(argv, envp, pipe_fd);
+    pid2 = fork();
+    if (pid2 == -1)
+        handle_error();
+    if (pid2 == 0)
+        parent_process(argv, envp, pipe_fd);
+    close(pipe_fd[0]);
+    close(pipe_fd[1]);
+    waitpid(pid1, &status, 0);
+    waitpid(pid2, &status, 0);
+    return (WEXITSTATUS(status));
 }
