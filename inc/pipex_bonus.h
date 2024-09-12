@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 18:37:46 by mvigara-          #+#    #+#             */
+/*   Updated: 2024/09/12 18:41:40 by mvigara-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
-# include <unistd.h>
+# include "libft.h"
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <fcntl.h>
 # include <sys/wait.h>
-# include "libft.h"
+# include <unistd.h>
 
 void	child_process(char *argv, char **envp);
 void	here_doc_child(int *fd, char *limiter);
@@ -16,5 +28,6 @@ void	execute_pipex(char *argv, char **envp);
 void	handle_error(void);
 void	free_matrix(char **matrix);
 char	*find_path(char *cmd, char **envp);
+void	check_empty_args(int argc, char **argv);
 
 #endif

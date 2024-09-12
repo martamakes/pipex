@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:40:21 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/12 11:03:14 by marta            ###   ########.fr       */
+/*   Updated: 2024/09/12 18:43:29 by mvigara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	child_process(char *argv, char **envp)
+void	child_process(char *argv, char **envp, int *pipe_fd)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -46,8 +46,8 @@ void	here_doc_child(int *fd, char *limiter)
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 &&
-			line[ft_strlen(limiter)] == '\n')
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0
+			&& line[ft_strlen(limiter)] == '\n')
 		{
 			free(line);
 			exit(EXIT_SUCCESS);
@@ -105,33 +105,35 @@ void	handle_files(int argc, char **argv)
 	dup2(outfile, STDOUT_FILENO);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-    int     pipe_fd[2];
-    pid_t   pid1, pid2;
-    int     status;
+	int		pipe_fd[2];
+	int		status;
+	pid_t	pid1;
+	pid_t	pid2;
 
-    if (argc != 5)
-    {
-        ft_putstr_fd("Error: Invalid usage. Use: ./pipex file1 cmd1 cmd2 file2\n", 2);
-        exit(1);
-    }
-    check_empty_args(argc, argv);
-    if (pipe(pipe_fd) == -1)
-        handle_error();
-    pid1 = fork();
-    if (pid1 == -1)
-        handle_error();
-    if (pid1 == 0)
-        child_process(argv, envp, pipe_fd);
-    pid2 = fork();
-    if (pid2 == -1)
-        handle_error();
-    if (pid2 == 0)
-        parent_process(argv, envp, pipe_fd);
-    close(pipe_fd[0]);
-    close(pipe_fd[1]);
-    waitpid(pid1, &status, 0);
-    waitpid(pid2, &status, 0);
-    return (WEXITSTATUS(status));
+	if (argc != 5)
+	{
+		ft_putstr_fd("Error: Invalid usage. Use: ./pipex file1 cmd1 cmd2 file2\n",
+			2);
+		exit(1);
+	}
+	check_empty_args(argc, argv);
+	if (pipe(pipe_fd) == -1)
+		handle_error();
+	pid1 = fork();
+	if (pid1 == -1)
+		handle_error();
+	if (pid1 == 0)
+		child_process(argv, envp, pipe_fd);
+	pid2 = fork();
+	if (pid2 == -1)
+		handle_error();
+	if (pid2 == 0)
+		parent_process(argv, envp, pipe_fd);
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	return (WEXITSTATUS(status));
 }

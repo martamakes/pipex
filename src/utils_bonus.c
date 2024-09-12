@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:55:49 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/12 10:26:00 by marta            ###   ########.fr       */
+/*   Updated: 2024/09/12 18:36:36 by mvigara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	check_empty_args(int argc, char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (i < argc)
+	{
+		if (ft_strlen(argv[i]) == 0)
+		{
+			ft_putstr_fd("Error: Empty arguments are not allowed\n", 2);
+			exit(1);
+		}
+		i++;
+	}
+}
 
 void	free_matrix(char **matrix)
 {

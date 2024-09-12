@@ -4,3 +4,6 @@ obj/
 infile
 output/
 *.txt
+outdir
+outfile
+*.a
