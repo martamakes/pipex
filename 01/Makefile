@@ -6,14 +6,16 @@
 #    By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 15:55:17 by mvigara           #+#    #+#              #
-#    Updated: 2024/09/13 16:06:11 by mvigara-         ###   ########.fr        #
+#    Updated: 2024/09/13 22:17:04 by mvigara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+MAKEFLAGS += --no-print-directory
 
 NAME = pipex
 NAME_BONUS = pipex_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
 
 # Directories
