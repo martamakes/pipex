@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marta <marta@student.42.fr>                +#+  +:+       +#+         #
+#    By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 15:55:17 by mvigara           #+#    #+#              #
-#    Updated: 2024/09/12 20:50:09 by marta            ###   ########.fr        #
+#    Updated: 2024/09/13 15:14:54 by mvigara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ LIBFT_DIR = lib/libft
 
 # SRC and OBJ files
 SRC_FILES = pipex.c utils.c
-BONUS_FILES = pipex_bonus.c utils_bonus.c pipex_bonus_utils.c
+BONUS_FILES = pipex_bonus.c utils_bonus.c pipex_bonus_utils.c \
+	pipex_bonus_functions.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 BONUS_SRCS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
