@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:55:24 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/12 18:41:23 by mvigara-         ###   ########.fr       */
+/*   Updated: 2024/09/13 09:37:00 by marta            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	child_process(char **argv, char **envp, int *pipe_fd)
 	infile = open(argv[1], O_RDONLY);
 	if (infile == -1)
 	{
-		ft_putstr_fd("Error: Unable to open input file\n", 2);
+		perror("Error");
 		exit(EXIT_FAILURE);
 	}
-	dup2(infile, STDIN_FILENO);
-	dup2(pipe_fd[1], STDOUT_FILENO);
+	if (dup2(infile, STDIN_FILENO) == -1)
+		handle_error();
+	if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+		handle_error();
 	close(pipe_fd[0]);
 	close(infile);
 	execute_pipex(argv[2], envp);
@@ -36,11 +38,13 @@ void	parent_process(char **argv, char **envp, int *pipe_fd)
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile == -1)
 	{
-		ft_putstr_fd("Error: Unable to open or create output file\n", 2);
+		perror("Error");
 		exit(EXIT_FAILURE);
 	}
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
+	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+		handle_error();
+	if (dup2(outfile, STDOUT_FILENO) == -1)
+		handle_error();
 	close(pipe_fd[1]);
 	close(outfile);
 	execute_pipex(argv[3], envp);
@@ -53,8 +57,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 	{
-		ft_putstr_fd("Error: Bad arguments\n", 2);
-		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2\n", 1);
+		ft_printf("Error: Bad arguments\n");
+		ft_printf("Usage: ./pipex file1 cmd1 cmd2 file2\n");
 		exit(EXIT_FAILURE);
 	}
 	check_empty_args(argc, argv);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:14:37 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/12 18:41:21 by mvigara-         ###   ########.fr       */
+/*   Updated: 2024/09/13 09:21:37 by marta            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_empty_args(int argc, char **argv)
 		if (ft_strlen(argv[i]) == 0)
 		{
 			ft_putstr_fd("Error: Empty arguments are not allowed\n", 2);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		i++;
 	}
@@ -55,8 +55,10 @@ char	*find_path(char *cmd, char **envp)
 	char	*part_path;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
+	if (!envp[i])
+		return (NULL);
 	paths = ft_split(envp[i] + 5, ':');
 	if (!paths)
 		return (NULL);
@@ -66,7 +68,7 @@ char	*find_path(char *cmd, char **envp)
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
-		if (access(path, F_OK) == 0)
+		if (access(path, F_OK | X_OK) == 0)
 			return (path);
 		free(path);
 	}
@@ -90,12 +92,6 @@ void	execute_pipex(char *argv, char **envp)
 		ft_putstr_fd("\n", 2);
 		free_matrix(cmd);
 		exit(127);
-	}
-	if (access(path, X_OK) == -1)
-	{
-		free_matrix(cmd);
-		free(path);
-		exit(126);
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
