@@ -6,14 +6,13 @@
 #    By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 15:55:17 by mvigara           #+#    #+#              #
-#    Updated: 2024/09/13 22:17:04 by mvigara-         ###   ########.fr        #
+#    Updated: 2024/09/13 23:21:47 by mvigara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MAKEFLAGS += --no-print-directory
 
 NAME = pipex
-NAME_BONUS = pipex_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
@@ -25,12 +24,9 @@ OBJ_DIR = obj
 LIBFT_DIR = lib/libft
 
 # SRC and OBJ files
-SRC_FILES = pipex.c utils.c
-BONUS_FILES = pipex_bonus.c here_doc_bonus.c cmd_execution_bonus.c process_utils_bonus.c
+SRC_FILES = pipex.c utils.c path.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-BONUS_SRCS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-BONUS_OBJS = $(BONUS_SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -50,16 +46,9 @@ RESET = \033[0m
 
 all: $(NAME)
 
-bonus: $(NAME_BONUS)
-
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 	@echo "$(GREEN)Pipex compiled!$(RESET)"
-	@$(MAKE) display_art
-
-$(NAME_BONUS): $(LIBFT) $(BONUS_OBJS)
-	@$(CC) $(CFLAGS) $(BONUS_OBJS) -L$(LIBFT_DIR) -lft -o $(NAME_BONUS)
-	@echo "$(GREEN)Pipex bonus compiled!$(RESET)"
 	@$(MAKE) display_art
 
 $(LIBFT):
@@ -77,13 +66,13 @@ clean:
 	@echo "$(RED)Objects removed$(RESET)"
 
 fclean: clean
-	@$(RM) $(NAME) $(NAME_BONUS)
+	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@echo "$(BLUE)Pipex cleaned$(RESET)"
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re display_art
+.PHONY: all clean fclean re display_art
 
 # Display art
 define PIPEX_ART

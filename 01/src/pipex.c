@@ -6,7 +6,7 @@
 /*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:55:24 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/13 22:51:52 by mvigara-         ###   ########.fr       */
+/*   Updated: 2024/09/13 23:17:05 by mvigara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	child_process(char **argv, char **envp, int *pipe_fd)
 		ft_putstr_fd("no such file or directory\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(infile, STDIN_FILENO) == -1 || dup2(pipe_fd[1], STDOUT_FILENO) ==
-		-1)
+	if (dup2(infile, STDIN_FILENO) == -1
+		|| dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 		handle_error();
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
@@ -57,8 +57,8 @@ void	parent_process(char **argv, char **envp, int *pipe_fd)
 		ft_putstr_fd("no such file or directory\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(pipe_fd[0], STDIN_FILENO) == -1 || dup2(outfile, STDOUT_FILENO) ==
-		-1)
+	if (dup2(pipe_fd[0], STDIN_FILENO) == -1
+		|| dup2(outfile, STDOUT_FILENO) == -1)
 		handle_error();
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
@@ -118,6 +118,7 @@ void	setup_pipes_and_execute(char **argv, char **envp)
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 5)
