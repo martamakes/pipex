@@ -6,7 +6,7 @@
 #    By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 15:55:17 by mvigara           #+#    #+#              #
-#    Updated: 2024/09/13 15:14:54 by mvigara-         ###   ########.fr        #
+#    Updated: 2024/09/13 16:06:11 by mvigara-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ LIBFT_DIR = lib/libft
 
 # SRC and OBJ files
 SRC_FILES = pipex.c utils.c
-BONUS_FILES = pipex_bonus.c utils_bonus.c pipex_bonus_utils.c \
-	pipex_bonus_functions.c
+BONUS_FILES = pipex_bonus.c here_doc_bonus.c cmd_execution_bonus.c process_utils_bonus.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 BONUS_SRCS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -37,7 +36,6 @@ LIBFT_INC = $(LIBFT_DIR)/inc
 
 # Includes
 INC = -I$(INC_DIR) -I$(LIBFT_INC)
-BONUS_INC = -I$(INC_DIR) -I$(LIBFT_INC) -I$(SRC_DIR)
 
 # Colors
 GREEN = \033[0;32m
@@ -85,7 +83,7 @@ re: fclean all
 
 .PHONY: all bonus clean fclean re display_art
 
-# New display art
+# Display art
 define PIPEX_ART
 $(RED)██████╗ $(YELLOW)██╗$(GREEN)██████╗ $(BLUE)███████╗$(PURPLE)██╗  ██╗
 $(RED)██╔══██╗$(YELLOW)██║$(GREEN)██╔══██╗$(BLUE)██╔════╝$(PURPLE)╚██╗██╔╝
