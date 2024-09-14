@@ -131,3 +131,90 @@ diff "output file.txt" "output file_bash.txt"
 ```
 
 Para cada prueba, primero ejecuta el comando de Pipex y luego el equivalente en Bash. Compara los resultados usando `diff`. Si no hay diferencias, tu implementación de Pipex está funcionando correctamente para ese caso.
+
+
+CASOS PERMISOS
+
+Claro, te proporcionaré varios ejemplos para probar diferentes escenarios de permisos de archivos. Estos comandos te ayudarán a simular situaciones comunes que tu programa pipex debería manejar correctamente.
+
+1. Archivo de entrada sin permisos de lectura:
+
+```bash
+touch input_file
+chmod 000 input_file
+./pipex input_file "cat" "wc -l" output_file
+```
+
+2. Archivo de salida en un directorio sin permisos de escritura:
+
+```bash
+mkdir no_write_dir
+chmod 555 no_write_dir
+./pipex input_file "cat" "wc -l" no_write_dir/output_file
+```
+
+3. Intentar ejecutar un comando sin permisos de ejecución:
+
+```bash
+echo "#!/bin/bash" > my_script.sh
+echo "echo Hello" >> my_script.sh
+chmod -x my_script.sh
+./pipex input_file "./my_script.sh" "wc -l" output_file
+```
+
+4. Archivo de entrada que es un directorio:
+
+```bash
+mkdir input_dir
+./pipex input_dir "cat" "wc -l" output_file
+```
+
+5. Archivo de salida que es un directorio:
+
+```bash
+mkdir output_dir
+./pipex input_file "cat" "wc -l" output_dir
+```
+
+6. Archivo de entrada que no existe:
+
+```bash
+./pipex nonexistent_file "cat" "wc -l" output_file
+```
+
+7. Comando que no existe:
+
+```bash
+./pipex input_file "nonexistent_command" "wc -l" output_file
+```
+
+8. Archivo de entrada simbólico que apunta a un archivo sin permisos:
+
+```bash
+touch no_perm_file
+chmod 000 no_perm_file
+ln -s no_perm_file symlink_file
+./pipex symlink_file "cat" "wc -l" output_file
+```
+
+9. Intentar escribir en un archivo de solo lectura:
+
+```bash
+touch readonly_output
+chmod 444 readonly_output
+./pipex input_file "cat" "wc -l" readonly_output
+```
+
+10. Usar un archivo de dispositivo como entrada:
+
+```bash
+./pipex /dev/null "cat" "wc -l" output_file
+```
+
+Estos ejemplos cubren una variedad de situaciones que tu programa pipex debería manejar adecuadamente. Asegúrate de probar cada uno y verificar que tu programa maneje los errores correctamente, mostrando mensajes de error apropiados y saliendo con los códigos de estado adecuados.
+
+Recuerda limpiar los archivos y directorios de prueba después de usarlos:
+
+```bash
+rm -rf input_file output_file no_write_dir my_script.sh input_dir output_dir nonexistent_file no_perm_file symlink_file readonly_output
+```
