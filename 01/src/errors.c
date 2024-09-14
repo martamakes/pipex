@@ -6,7 +6,7 @@
 /*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:32:41 by marta             #+#    #+#             */
-/*   Updated: 2024/09/14 15:09:48 by marta            ###   ########.fr       */
+/*   Updated: 2024/09/14 18:19:18 by marta            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ void    handle_error(char *context, char *detail, int error_code)
     if (detail)
     {
         ft_putstr_fd(detail, 2);
-        ft_putstr_fd(": ", 2);
     }
-    ft_putstr_fd(strerror(error_code), 2);
+    else
+    {
+        ft_putstr_fd(strerror(error_code), 2);
+    }
     ft_putstr_fd("\n", 2);
     if (error_code == ENOENT && context && ft_strncmp(context, "execve", 6) == 0)
         exit(127);

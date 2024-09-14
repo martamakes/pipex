@@ -58,12 +58,12 @@ diff outfile outfile_bash
 
 Pipex:
 ```bash
-./pipex infile "tr ' ' '\n'" "sort | uniq -c | sort -nr" outfile
+./pipex infile "tr ' ' '\n'" "sort -nr" outfile
 ```
 
 Bash equivalent:
 ```bash
-< infile tr ' ' '\n' | sort | uniq -c | sort -nr > outfile_bash
+< infile tr ' ' '\n' | sort -nr > outfile_bash
 diff outfile outfile_bash
 ```
 

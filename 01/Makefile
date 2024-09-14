@@ -6,7 +6,7 @@
 #    By: marta <marta@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 15:55:17 by mvigara           #+#    #+#              #
-#    Updated: 2024/09/14 14:42:31 by marta            ###   ########.fr        #
+#    Updated: 2024/09/14 18:57:13 by marta            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ OBJ_DIR = obj
 LIBFT_DIR = lib/libft
 
 # SRC and OBJ files
-SRC_FILES = pipex.c utils.c path.c path_utils.c errors.c
+SRC_FILES = pipex.c utils.c path.c path_utils.c errors.c parser.c \
+	processes.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
