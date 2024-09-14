@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 23:18:12 by mvigara-          #+#    #+#             */
-/*   Updated: 2024/09/13 23:20:13 by mvigara-         ###   ########.fr       */
+/*   Updated: 2024/09/14 08:30:15 by marta            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "pipex.h"
 
 char	*find_path(char *cmd, char **envp)
@@ -91,4 +92,74 @@ char	*get_outfile_path(char *outfile_arg)
 		return (dir_path);
 	}
 	return (ft_strdup(outfile_arg));
+}
+*/
+#include "pipex.h"
+
+static char	*join_path(char *dir, char *cmd)
+{
+	char	*tmp;
+	char	*res;
+
+	tmp = ft_strjoin(dir, "/");
+	if (!tmp)
+		return (NULL);
+	res = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (res);
+}
+
+char	*find_path(char *cmd, char **envp)
+{
+	char	**paths;
+	char	*path;
+	int		i;
+
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	if (!envp[i])
+		return (ft_strdup(cmd));
+	paths = ft_split(envp[i] + 5, ':');
+	if (!paths)
+		return (NULL);
+	i = -1;
+	while (paths[++i])
+	{
+		path = join_path(paths[i], cmd);
+		if (!path || access(path, X_OK) == 0)
+		{
+			free_matrix(paths);
+			return (path);
+		}
+		free(path);
+	}
+	free_matrix(paths);
+	return (ft_strdup(cmd));
+}
+
+static char	*get_base_path(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+			return (envp[i] + 4);
+		i++;
+	}
+	return ("/");
+}
+
+char	*get_file_path(char *file, char **envp)
+{
+	char	*base_path;
+	char	*full_path;
+
+	if (file[0] == '/')
+		return (ft_strdup(file));
+	base_path = get_base_path(envp);
+	full_path = join_path(base_path, file);
+	return (full_path);
 }
