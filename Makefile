@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvigara- <mvigara-@student.42madrid.com    +#+  +:+       +#+         #
+#    By: marta <marta@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 15:55:17 by mvigara           #+#    #+#              #
-#    Updated: 2024/09/13 16:06:11 by mvigara-         ###   ########.fr        #
+#    Updated: 2024/09/14 12:01:53 by marta            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ $(OBJ_DIR):
 clean:
 	@$(RM) -r $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@echo "$(RED)Objects removed$(RESET)"
+	@echo "$(RED)Pipex objects removed$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME) $(NAME_BONUS)

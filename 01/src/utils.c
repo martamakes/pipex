@@ -6,7 +6,7 @@
 /*   By: marta <marta@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:14:37 by mvigara           #+#    #+#             */
-/*   Updated: 2024/09/14 12:38:08 by marta            ###   ########.fr       */
+/*   Updated: 2024/09/14 13:17:36 by marta            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,20 @@ void	print_error(char *arg, int error_code)
 	ft_putstr_fd("\n", 2);
 }
 
-int open_file(char *file, int flags)
+int	open_file(char *file, int flags)
 {
-    int     fd;
-    char    *full_path;
+	int		fd;
+	char	*full_path;
 
-    full_path = get_file_path(file, NULL);
-    if (!full_path)
-    {
-        print_error(file, ENOENT);
-        return (-1);
-    }
-    fd = open(full_path, flags, 0644);
-    free(full_path);
-    if (fd == -1)
-        print_error(file, errno);
-    return (fd);
+	full_path = get_file_path(file, NULL);
+	if (!full_path)
+	{
+		print_error(file, ENOENT);
+		return (-1);
+	}
+	fd = open(full_path, flags, 0644);
+	free(full_path);
+	if (fd == -1)
+		print_error(file, errno);
+	return (fd);
 }
