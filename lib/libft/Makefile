@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvigara <mvigara@student.42.fr>            +#+  +:+       +#+         #
+#    By: marta <marta@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/18 13:36:09 by mvigara-          #+#    #+#              #
-#    Updated: 2024/08/17 16:13:06 by mvigara          ###   ########.fr        #
+#    Updated: 2024/09/14 12:04:19 by marta            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,9 +72,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@$(RM) -r $(OBJ_DIR)
-	@echo "${RED}objects removed${RESET}"
+	@echo "${RED}libft objects removed${RESET}"
 
-fclean: clean
+fclean: 
 	@$(RM) $(NAME)
 	@echo "${BLUE}libft cleaned${RESET}"
 
