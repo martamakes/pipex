@@ -135,7 +135,7 @@ Para cada prueba, primero ejecuta el comando de Pipex y luego el equivalente en 
 
 CASOS PERMISOS
 
-Claro, te proporcionaré varios ejemplos para probar diferentes escenarios de permisos de archivos. Estos comandos te ayudarán a simular situaciones comunes que tu programa pipex debería manejar correctamente.
+Ejemplos para probar diferentes escenarios de permisos de archivos. Estos comandos te ayudarán a simular situaciones comunes que tu programa pipex debería manejar correctamente.
 
 # Pruebas de permisos para pipex
 
